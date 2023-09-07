@@ -4,7 +4,7 @@ namespace App\Module\Message\Application\Controller;
 
 use App\Module\Message\Application\Form\MessageFormType;
 use App\Module\Message\Application\Form\MessageSortFormType;
-use App\Module\Message\Infrastructure\Persistence\MessagePersistence;
+use App\Module\Message\Application\Message\SaveMessageMessage;
 use App\Module\Message\Infrastructure\Query\FindMessageQuery;
 use App\Module\Message\Infrastructure\Query\GetAllMessagesQuery;
 use App\Module\Message\Infrastructure\Query\SortMessagesQuery;
@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Uid\Uuid;
 
 class MessageController extends AbstractController
@@ -44,14 +46,15 @@ class MessageController extends AbstractController
         return $this->json($message);
     }
 
-    public function create(Request $request, MessagePersistence $messagePersistence): JsonResponse
+    public function create(Request $request, MessageBusInterface $messageBus): JsonResponse
     {
         $formData = json_decode($request->getContent(), true) ?? [];
         $form = $this->createForm(MessageFormType::class);
         $form->submit($formData);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $id = $messagePersistence->saveForm($form->getData())->toMessageIdDto();
+            $envelope = $messageBus->dispatch(new SaveMessageMessage($form->getData()));
+            $id = $envelope->last(HandledStamp::class)->getResult();
         } else {
             return $this->json(['Invalid form data'], Response::HTTP_BAD_REQUEST);
         }
