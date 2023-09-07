@@ -1,0 +1,4 @@
+api_message_list:
+    path: /
+    controller: App\Module\Message\Application\Controller\MessageController::list
+    methods: [GET]
