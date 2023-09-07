@@ -2,7 +2,9 @@
 
 namespace App\Module\Message\Application\Controller;
 
+use App\Module\Message\Application\Form\MessageFormType;
 use App\Module\Message\Application\Form\MessageSortFormType;
+use App\Module\Message\Infrastructure\Persistence\MessagePersistence;
 use App\Module\Message\Infrastructure\Query\FindMessageQuery;
 use App\Module\Message\Infrastructure\Query\GetAllMessagesQuery;
 use App\Module\Message\Infrastructure\Query\SortMessagesQuery;
@@ -21,7 +23,7 @@ class MessageController extends AbstractController
     ): JsonResponse
     {
         $messages = $getAllMessagesQuery->getAll();
-        $form = $this->createForm(MessageSortFormType::class, options: ['method' => 'GET']);
+        $form = $this->createForm(MessageSortFormType::class);
         $form->submit($request->query->all('sort'), false);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -40,5 +42,20 @@ class MessageController extends AbstractController
         }
 
         return $this->json($message);
+    }
+
+    public function create(Request $request, MessagePersistence $messagePersistence): JsonResponse
+    {
+        $formData = json_decode($request->getContent(), true) ?? [];
+        $form = $this->createForm(MessageFormType::class);
+        $form->submit($formData);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $id = $messagePersistence->saveForm($form->getData())->toMessageIdDto();
+        } else {
+            return $this->json(['Invalid form data'], Response::HTTP_BAD_REQUEST);
+        }
+
+        return $this->json($id);
     }
 }

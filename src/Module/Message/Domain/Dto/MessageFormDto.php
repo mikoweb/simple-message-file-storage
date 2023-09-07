@@ -2,9 +2,9 @@
 
 namespace App\Module\Message\Domain\Dto;
 
-final readonly class MessageFormDto
+final class MessageFormDto
 {
     public function __construct(
-        public string $message,
+        public ?string $message = null,
     ) {}
 }

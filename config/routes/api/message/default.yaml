@@ -7,3 +7,8 @@ api_message_get:
     path: /{id}
     controller: App\Module\Message\Application\Controller\MessageController::getMessage
     methods: [GET]
+
+api_message_create:
+    path: /
+    controller: App\Module\Message\Application\Controller\MessageController::create
+    methods: [POST]
