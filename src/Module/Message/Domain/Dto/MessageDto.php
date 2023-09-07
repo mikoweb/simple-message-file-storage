@@ -12,4 +12,9 @@ final readonly class MessageDto
         public string $message,
         public DateTime $createdAt,
     ) {}
+
+    public function toMessageIdDto(): MessageIdDto
+    {
+        return new MessageIdDto($this->id);
+    }
 }
