@@ -10,3 +10,7 @@ composer.phar
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> app ###
+resources
+###< app ###
