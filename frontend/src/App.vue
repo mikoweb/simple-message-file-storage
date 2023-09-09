@@ -14,5 +14,5 @@ import {
   IonSplitPane,
 } from '@ionic/vue';
 
-import AppMenu from './components/menu/AppMenu.vue';
+import AppMenu from '@/components/menu/AppMenu.vue';
 </script>

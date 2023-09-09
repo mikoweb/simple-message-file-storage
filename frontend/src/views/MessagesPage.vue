@@ -10,12 +10,32 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <p>Lorem Ipsum</p>
-      <p>TODO messages list</p>
+        <DxDataGrid
+                :data-source="messages"
+                key-expr="id">
+        </DxDataGrid>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { DxDataGrid } from 'devextreme-vue/data-grid';
+</script>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { container } from "tsyringe";
+import GetEmployeesQuery from '@/logic/infrastructure/query/get-employees-query';
+
+export default defineComponent({
+  data() {
+    return {
+      messages: [],
+    }
+  },
+  async mounted() {
+    this.messages = await container.resolve(GetEmployeesQuery).getEmployees();
+  }
+});
 </script>
