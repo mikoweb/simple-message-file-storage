@@ -3,14 +3,18 @@
     <dx-data-grid
             :data-source="messages"
             key-expr="id"
-            @selection-changed="onRowSelect">
+            @selection-changed="_onRowSelect">
       <dx-selection mode="single" />
       <dx-filter-row visible="true" />
       <dx-search-panel visible="true" />
       <dx-column data-field="id">
           <dx-required-rule />
       </dx-column>
-      <dx-column data-field="formattedCreatedAt">
+      <dx-column
+              data-field="createdAt"
+              :sort-index="0"
+              sort-order="desc"
+              :customize-text="_formatCreatedAt">
           <dx-required-rule />
       </dx-column>
       <dx-column data-field="message">
@@ -63,6 +67,7 @@ import { container } from 'tsyringe';
 import GetAllMessagesQuery from '@/logic/infrastructure/query/get-all-messages-query';
 import FindMessageQuery from "@/logic/infrastructure/query/find-message-query";
 import MessageDto from "@/logic/domain/dto/message-dto";
+import DateFormatter from "@/logic/application/date/date-formatter";
 
 export default defineComponent({
   data() {
@@ -76,20 +81,23 @@ export default defineComponent({
     this.messages = await container.resolve(GetAllMessagesQuery).getAll();
   },
   methods: {
-    async onRowSelect(e) {
-      const id: string = e.currentSelectedRowKeys[0];
-      this.setOpen(true);
-      this.modalMessage = await container.resolve(FindMessageQuery).find(id);
-    },
-    setOpen(open: boolean) {
+    setOpen(open: boolean): void {
       this.isOpen = open;
 
       if (!this.isOpen) {
         this._clearModalMessage();
       }
     },
-    _clearModalMessage() {
+    async _onRowSelect(e): void {
+      const id: string = e.currentSelectedRowKeys[0];
+      this.setOpen(true);
+      this.modalMessage = await container.resolve(FindMessageQuery).find(id);
+    },
+    _clearModalMessage(): void {
       this.modalMessage = null;
+    },
+    _formatCreatedAt(cellInfo): string {
+      return DateFormatter.formatToDateTime(cellInfo.value);
     }
   }
 });
