@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{ this.$attrs.title }}</ion-title>
+        <ion-title>{{ $attrs.title }}</ion-title>
       </ion-toolbar>
     </ion-header>
 

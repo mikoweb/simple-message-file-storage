@@ -37,17 +37,17 @@
             <ion-item>
               <ion-label>
                 <b>Id:</b>
-                <span class="ion-float-end">{{ this.$data.modalMessage.id }}</span>
+                <span class="ion-float-end">{{ modalMessage.id }}</span>
               </ion-label>
             </ion-item>
             <ion-item>
               <ion-label>
                 <b>Created at:</b>
-                <span class="ion-float-end">{{ this.$data.modalMessage.formattedCreatedAt }}</span>
+                <span class="ion-float-end">{{ modalMessage.formattedCreatedAt }}</span>
               </ion-label>
             </ion-item>
             <ion-item>
-              {{ this.$data.modalMessage.message }}
+              {{ modalMessage.message }}
             </ion-item>
           </ion-list>
         </div>
