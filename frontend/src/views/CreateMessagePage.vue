@@ -1,7 +1,7 @@
 <template>
   <app-main title="Create Message">
     <div class="ion-padding">
-      <form @submit.prevent="onSubmit">
+      <form @submit.prevent="_onSubmit">
         <ion-textarea
                 v-model="formData.message"
                 label="Message:"
@@ -36,7 +36,11 @@ export default defineComponent({
     }
   },
   methods: {
-    async onSubmit(event: Event) {
+    resetForm(form: HTMLFormElement): void {
+      form.reset();
+      form.querySelectorAll('ion-textarea, ion-input').forEach((input: any) => {input.value = ''});
+    },
+    async _onSubmit(event: Event): void {
       this.resetForm(event.target as HTMLFormElement);
       const uiMessageService: UiMessageService = container.resolve(UiMessageService);
 
@@ -46,10 +50,6 @@ export default defineComponent({
       } catch (error) {
         await uiMessageService.createError({message: 'Save fail!'});
       }
-    },
-    resetForm(form: HTMLFormElement) {
-      form.reset();
-      form.querySelectorAll('ion-textarea, ion-input').forEach((input: any) => {input.value = ''});
     }
   }
 });
