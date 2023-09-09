@@ -40,7 +40,7 @@ export default defineComponent({
       form.reset();
       form.querySelectorAll('ion-textarea, ion-input').forEach((input: any) => {input.value = ''});
     },
-    async _onSubmit(event: Event): void {
+    async _onSubmit(event: Event): Promise<void> {
       this.resetForm(event.target as HTMLFormElement);
       const uiMessageService: UiMessageService = container.resolve(UiMessageService);
 

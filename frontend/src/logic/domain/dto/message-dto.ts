@@ -12,7 +12,7 @@ export default class MessageDto {
     return DateFormatter.formatToDateTime(this.createdAt);
   }
 
-  public static fromRawObject(data): this {
+  public static fromRawObject(data: any): MessageDto {
     return new MessageDto(
       data.id,
       data.message,

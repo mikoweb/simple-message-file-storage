@@ -90,7 +90,6 @@ import FindMessageQuery from "@/logic/infrastructure/query/find-message-query";
 import MessageDto from "@/logic/domain/dto/message-dto";
 import DateFormatter from "@/logic/application/date/date-formatter";
 import CustomStore from 'devextreme/data/custom_store';
-import LoadOptions from 'devextreme/data/load_options';
 import MessageSortDto from "@/logic/domain/dto/message-sort-dto";
 import MessageSortOptionEnum from "@/logic/domain/enum/message-sort-option";
 import SortDirection from "@/logic/domain/enum/sort-direction";
@@ -101,12 +100,12 @@ export default defineComponent({
     return {
       messages: new CustomStore({
         key: 'id',
-        load: async (loadOptions: LoadOptions) => {
+        load: async (loadOptions: any) => {
           const sortingOptions: any[] = loadOptions.sort as any[];
           let sort: MessageSortDto | null = null;
 
           if (sortingOptions.length > 0) {
-            const sortOption = MessageSortOptionEnum[_.upperFirst(sortingOptions[0].selector)];
+            const sortOption = (MessageSortOptionEnum as any)[_.upperFirst(sortingOptions[0].selector)];
             const sortDirection = sortingOptions[0].desc ? SortDirection.Desc : SortDirection.Asc;
 
             if (sortOption) {
@@ -129,7 +128,7 @@ export default defineComponent({
         this._clearModalMessage();
       }
     },
-    async _onRowSelect(e): void {
+    async _onRowSelect(e: any): Promise<void> {
       const id: string = e.currentSelectedRowKeys[0];
       this.setOpen(true);
       this.modalMessage = await container.resolve(FindMessageQuery).find(id);
@@ -137,7 +136,7 @@ export default defineComponent({
     _clearModalMessage(): void {
       this.modalMessage = null;
     },
-    _formatCreatedAt(cellInfo): string {
+    _formatCreatedAt(cellInfo: any): string {
       return DateFormatter.formatToDateTime(cellInfo.value);
     }
   }

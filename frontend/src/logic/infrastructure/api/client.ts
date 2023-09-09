@@ -3,7 +3,7 @@ import axios from 'axios';
 
 @singleton()
 export default class Client {
-  private readonly client: axios;
+  private readonly client: any;
 
   constructor() {
     this.client = axios.create({
@@ -11,7 +11,7 @@ export default class Client {
     });
   }
 
-  public get method(): axios {
+  public get method() {
     return this.client;
   }
 }
