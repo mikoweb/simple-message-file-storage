@@ -1,0 +1,20 @@
+# https://medium.com/@meherbensalah4/how-to-dockerize-symfony-project-f06bcd735308
+
+version: "3.8"
+services:
+    backend_symfony:
+        build: docker/backend_symfony
+        container_name: simple_message_file_storage_backend
+        environment:
+            - APP_ENV=prod
+        ports:
+            - "8741:80"
+        volumes:
+            - ./docker/backend_symfony/vhosts:/etc/apache2/sites-enabled
+            - ./:/var/www/simple-message-file-storage
+        restart: always
+        networks:
+            - backend
+
+networks:
+    backend:
