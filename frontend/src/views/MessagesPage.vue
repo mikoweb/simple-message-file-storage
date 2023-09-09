@@ -5,6 +5,17 @@
             key-expr="id"
             @selection-changed="onRowSelect">
       <dx-selection mode="single" />
+      <dx-filter-row visible="true" />
+      <dx-search-panel visible="true" />
+      <dx-column data-field="id">
+          <dx-required-rule />
+      </dx-column>
+      <dx-column data-field="formattedCreatedAt">
+          <dx-required-rule />
+      </dx-column>
+      <dx-column data-field="message">
+        <dx-required-rule />
+      </dx-column>
     </dx-data-grid>
     <ion-modal :is-open="isOpen">
       <ion-header>
@@ -27,7 +38,7 @@
             <ion-item>
               <ion-label>
                 <b>Created at:</b>
-                <span class="ion-float-end">{{ this.$data.modalMessage.createdAt }}</span>
+                <span class="ion-float-end">{{ this.$data.modalMessage.formattedCreatedAt }}</span>
               </ion-label>
             </ion-item>
             <ion-item>
@@ -43,7 +54,7 @@
 <script setup lang="ts">
 import AppMain from "@/components/main/AppMain.vue";
 import { IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonList, IonItem, IonLabel } from '@ionic/vue';
-import { DxDataGrid, DxSelection } from 'devextreme-vue/data-grid';
+import { DxDataGrid, DxSelection, DxColumn, DxRequiredRule, DxFilterRow, DxSearchPanel } from 'devextreme-vue/data-grid';
 </script>
 
 <script lang="ts">
