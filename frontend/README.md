@@ -11,3 +11,4 @@
 * [Axios](https://axios-http.com/docs/instance)
 * [DateTime - Luxon](https://moment.github.io/luxon/#/tour)
 * [Date formatting](https://moment.github.io/luxon/#/formatting)
+* [Custom Data Sources](https://js.devexpress.com/Documentation/Guide/Data_Binding/Specify_a_Data_Source/Custom_Data_Sources/#Load_Data)
