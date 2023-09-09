@@ -9,6 +9,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/page/messages',
     component: () => import ('../views/MessagesPage.vue')
+  },
+  {
+    path: '/page/create-message',
+    component: () => import ('../views/CreateMessagePage.vue')
   }
 ]
 

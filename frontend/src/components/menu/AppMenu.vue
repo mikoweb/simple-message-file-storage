@@ -30,24 +30,16 @@ import {
   IonNote,
 } from '@ionic/vue';
 import { ref } from 'vue';
-import {
-  mailOutline,
-  mailSharp,
-} from 'ionicons/icons';
+import pages from './pages';
 
 const selectedIndex = ref(0);
-const appPages = [
-  {
-    title: 'Messages',
-    url: '/page/messages',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
-  }
-];
+const appPages = pages;
 
-const path = window.location.pathname.split('folder/')[1];
+const path = window.location.pathname.split('page/')[1];
 
 if (path !== undefined) {
-  selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
+  selectedIndex.value = appPages.findIndex(
+    (page) => page.title.toLowerCase().replace(' ', '-') === path.toLowerCase()
+  );
 }
 </script>
