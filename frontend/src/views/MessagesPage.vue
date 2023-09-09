@@ -26,7 +26,7 @@ import { DxDataGrid } from 'devextreme-vue/data-grid';
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { container } from "tsyringe";
-import GetEmployeesQuery from '@/logic/infrastructure/query/get-employees-query';
+import GetMessagesQuery from '@/logic/infrastructure/query/get-messages-query';
 
 export default defineComponent({
   data() {
@@ -35,7 +35,7 @@ export default defineComponent({
     }
   },
   async mounted() {
-    this.messages = await container.resolve(GetEmployeesQuery).getEmployees();
+    this.messages = await container.resolve(GetMessagesQuery).getEmployees();
   }
 });
 </script>
