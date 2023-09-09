@@ -9,3 +9,5 @@
 * [Add DevExtreme to a Vue Application](https://js.devexpress.com/Documentation/Guide/Vue_Components/Add_DevExtreme_to_a_Vue_Application/)
 * [Dependency Injection - TSyringe](https://github.com/microsoft/tsyringe)
 * [Axios](https://axios-http.com/docs/instance)
+* [DateTime - Luxon](https://moment.github.io/luxon/#/tour)
+* [Date formatting](https://moment.github.io/luxon/#/formatting)
