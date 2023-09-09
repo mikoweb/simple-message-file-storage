@@ -6,9 +6,8 @@ export default class Client {
   private readonly client: axios;
 
   constructor() {
-    // TODO api host from env
     this.client = axios.create({
-      baseURL: 'http://simple-message-file-storage.dev/api/',
+      baseURL: import.meta.env.VITE_API_CLIENT_HOST,
     });
   }
 
