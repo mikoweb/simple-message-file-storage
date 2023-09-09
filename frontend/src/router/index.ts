@@ -4,10 +4,10 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '',
-    redirect: '/folder/Messages'
+    redirect: '/page/messages'
   },
   {
-    path: '/folder/:id',
+    path: '/page/messages',
     component: () => import ('../views/MessagesPage.vue')
   }
 ]

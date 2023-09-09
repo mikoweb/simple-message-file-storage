@@ -39,7 +39,7 @@ const selectedIndex = ref(0);
 const appPages = [
   {
     title: 'Messages',
-    url: '/folder/Messages',
+    url: '/page/messages',
     iosIcon: mailOutline,
     mdIcon: mailSharp,
   }
