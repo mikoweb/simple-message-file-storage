@@ -10,13 +10,16 @@ Prepare application:
     wget https://getcomposer.org/download/latest-stable/composer.phar
     php8.2 composer.phar install
 
+    sudo setfacl -dR -m u:"www-data":rwX -m u:$(whoami):rwX var
+    sudo setfacl -dR -m u:"www-data":rwX -m u:$(whoami):rwX resources
+
 Run from `docker-compose.yml`:
 
-    sudo docker compose up --build
+    docker compose up --build
 
 If you don't use the app, delete docker containers, images etc. (**You do it at your own risk ;p**):
 
-    sudo docker system prune -a
+    docker system prune -a
 
 ## Links
 

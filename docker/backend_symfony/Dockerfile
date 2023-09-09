@@ -14,8 +14,6 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     echo "pl_PL.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
    mv composer.phar /usr/local/bin/composer
 
