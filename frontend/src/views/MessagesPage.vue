@@ -1,18 +1,19 @@
 <template>
   <app-main title="Messages">
     <dx-data-grid
-            :data-source="messages"
-            key-expr="id"
-            @selection-changed="_onRowSelect">
+              :data-source="messages"
+              key-expr="id"
+              @selection-changed="_onRowSelect">
+      <dx-remote-operations :sorting="true"/>
+      <dx-sorting mode="single" />
       <dx-selection mode="single" />
-      <dx-filter-row visible="true" />
-      <dx-search-panel visible="true" />
+      <dx-filter-row :visible="true" />
+      <dx-search-panel :visible="true" />
       <dx-column data-field="id">
           <dx-required-rule />
       </dx-column>
       <dx-column
               data-field="createdAt"
-              :sort-index="0"
               sort-order="desc"
               :customize-text="_formatCreatedAt">
           <dx-required-rule />
@@ -57,8 +58,28 @@
 
 <script setup lang="ts">
 import AppMain from "@/components/main/AppMain.vue";
-import { IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonList, IonItem, IonLabel } from '@ionic/vue';
-import { DxDataGrid, DxSelection, DxColumn, DxRequiredRule, DxFilterRow, DxSearchPanel } from 'devextreme-vue/data-grid';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonModal,
+  IonTitle,
+  IonToolbar
+} from '@ionic/vue';
+import {
+  DxColumn,
+  DxDataGrid,
+  DxFilterRow,
+  DxRemoteOperations,
+  DxRequiredRule,
+  DxSearchPanel,
+  DxSelection,
+  DxSorting
+} from 'devextreme-vue/data-grid';
 </script>
 
 <script lang="ts">
@@ -68,17 +89,37 @@ import GetAllMessagesQuery from '@/logic/infrastructure/query/get-all-messages-q
 import FindMessageQuery from "@/logic/infrastructure/query/find-message-query";
 import MessageDto from "@/logic/domain/dto/message-dto";
 import DateFormatter from "@/logic/application/date/date-formatter";
+import CustomStore from 'devextreme/data/custom_store';
+import LoadOptions from 'devextreme/data/load_options';
+import MessageSortDto from "@/logic/domain/dto/message-sort-dto";
+import MessageSortOptionEnum from "@/logic/domain/enum/message-sort-option";
+import SortDirection from "@/logic/domain/enum/sort-direction";
+import * as _ from 'lodash';
 
 export default defineComponent({
   data() {
     return {
-      messages: [],
+      messages: new CustomStore({
+        key: 'id',
+        load: async (loadOptions: LoadOptions) => {
+          const sortingOptions: any[] = loadOptions.sort as any[];
+          let sort: MessageSortDto | null = null;
+
+          if (sortingOptions.length > 0) {
+            const sortOption = MessageSortOptionEnum[_.upperFirst(sortingOptions[0].selector)];
+            const sortDirection = sortingOptions[0].desc ? SortDirection.Desc : SortDirection.Asc;
+
+            if (sortOption) {
+              sort = new MessageSortDto(sortOption, sortDirection);
+            }
+          }
+
+          return await container.resolve(GetAllMessagesQuery).getAll(sort);
+        }
+      }),
       isOpen: false,
       modalMessage: null as MessageDto | null
     }
-  },
-  async mounted() {
-    this.messages = await container.resolve(GetAllMessagesQuery).getAll();
   },
   methods: {
     setOpen(open: boolean): void {
