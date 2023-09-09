@@ -34,6 +34,10 @@ If you don't use the app, delete docker containers, images etc. (**You do it at 
 
     docker system prune -a
 
+## Open frontend in browser
+
+    http://localhost:8742
+
 ## Links
 
 * [Frontend](./frontend/README.md)
