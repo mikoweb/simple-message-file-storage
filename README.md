@@ -15,6 +15,7 @@ Prepare application:
 
 Run from `docker-compose.yml`:
 
+    su - ${USER}
     docker compose up --build
 
 If you don't use the app, delete docker containers, images etc. (**You do it at your own risk ;p**):
