@@ -16,5 +16,20 @@ services:
         networks:
             - backend
 
+    frontend_vue:
+        build: docker/frontend_vue
+        container_name: simple_message_file_storage_frontend
+        environment:
+            - VITE_API_CLIENT_HOST=http://localhost:8741/api/
+        ports:
+            - "8742:80"
+        volumes:
+            - ./docker/frontend_vue/vhosts:/etc/apache2/sites-enabled
+            - ./:/var/www/simple-message-file-storage
+        restart: always
+        networks:
+            - frontend
+
 networks:
     backend:
+    frontend:
