@@ -2,7 +2,21 @@
 
 Just an API that saves messages to a file.
 
-No docs ;p
+## Installation
+
+Prepare application:
+
+    git clone git@github.com:mikoweb/simple-message-file-storage.git
+    wget https://getcomposer.org/download/latest-stable/composer.phar
+    php8.2 composer.phar install
+
+Run from `docker-compose.yml`:
+
+    sudo docker compose up --build
+
+If you don't use the app, delete docker containers, images etc. (**You do it at your own risk ;p**):
+
+    sudo docker system prune -a
 
 ## Links
 
